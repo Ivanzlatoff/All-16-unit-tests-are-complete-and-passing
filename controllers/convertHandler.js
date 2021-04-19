@@ -13,20 +13,19 @@ function ConvertHandler() {
     if (result.toString().includes("/")) {
       let values = result.toString().split("/");
       if (values.length != 2) {
-        return "invalid number";
+        result = "invalid number";
+      } else {
+        values[0] = parseFloat(values[0]);
+        values[1] = parseFloat(values[1]);
+        result = parseFloat(values[0] / values[1]).toFixed(5);
       }
-      values[0] = parseFloat(values[0]);
-      values[1] = parseFloat(values[1]);
-      result = parseFloat(values[0] / values[1]).toFixed(5);
     }
 
     if (isNaN(result)) {
-      return "invalid number";
+      result = "invalid number";
     }
-
     return result;
   };
-
   this.getUnit = function(input) {
     let result = input.match(regex)[1];
 
@@ -53,7 +52,11 @@ function ConvertHandler() {
       return "invalid unit";
     }
 
-    return result.toLowerCase();
+    if (result === "l" || result === "L") {
+      return result.toUpperCase();
+    } else {
+      return result.toLowerCase();
+    }
   };
 
   this.getReturnUnit = function(initUnit) {
@@ -62,7 +65,7 @@ function ConvertHandler() {
       case "gal":
         result = "L";
         break;
-      case "l":
+      case "L":
         result = "gal";
         break;
       case "mi":
@@ -85,22 +88,22 @@ function ConvertHandler() {
     let result;
     switch (unit) {
       case "gal":
-        result = "gallon(s)";
+        result = "gallons";
         break;
-      case "l":
-        result = "litre(s)";
+      case "L":
+        result = "liters";
         break;
       case "mi":
-        result = "mile(s)";
+        result = "miles";
         break;
       case "km":
-        result = "kilometre(s)";
+        result = "kilometers";
         break;
       case "lbs":
-        result = "pound(s)";
+        result = "pounds";
         break;
       case "kg":
-        result = "kilogram(s)";
+        result = "kilograms";
         break;
     }
     return result;
@@ -115,7 +118,7 @@ function ConvertHandler() {
       case "gal":
         result = (initNum * galToL).toFixed(5);
         break;
-      case "l":
+      case "L":
         result = (initNum / galToL).toFixed(5);
         break;
       case "mi":
@@ -140,7 +143,7 @@ function ConvertHandler() {
       " " +
       this.spellOutUnit(initUnit) +
       " converts to " +
-      returnNum +
+      returnNum.toFixed(5) +
       " " +
       this.spellOutUnit(returnUnit);
 

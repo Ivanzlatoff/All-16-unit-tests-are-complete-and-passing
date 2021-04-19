@@ -4,7 +4,6 @@ const expect = require("chai").expect;
 const ConvertHandler = require("../controllers/convertHandler.js");
 
 module.exports = function(app) {
-
   let convertHandler = new ConvertHandler();
 
   app.route("/api/convert").get(function(req, res) {
@@ -33,9 +32,9 @@ module.exports = function(app) {
     }
 
     var responseObject = {};
-    responseObject["initNum"] = initNum;
+    responseObject["initNum"] = parseFloat(initNum);
     responseObject["initUnit"] = initUnit;
-    responseObject["returnNum"] = returnNum;
+    responseObject["returnNum"] = parseFloat(returnNum);
     responseObject["returnUnit"] = returnUnit;
     responseObject["string"] = toString;
 

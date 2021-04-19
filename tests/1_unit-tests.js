@@ -48,20 +48,23 @@ suite("Unit Tests", function() {
     test("For Each Valid Unit Inputs", function(done) {
       var input = [
         "gal",
-        "l",
         "mi",
         "km",
         "lbs",
         "kg",
         "GAL",
-        "L",
         "MI",
         "KM",
         "LBS",
         "KG"
       ];
+      var el = ["l", "L"];
       input.forEach(function(ele) {
         assert.equal(convertHandler.getUnit(32 + ele), ele.toLowerCase());
+      });
+
+      el.forEach(function(ele) {
+        assert.equal(convertHandler.getUnit(32 + ele), "L");
       });
       done();
     });
@@ -75,7 +78,7 @@ suite("Unit Tests", function() {
 
   suite("Function convertHandler.getReturnUnit(initUnit)", function() {
     test("For Each Valid Unit Inputs", function(done) {
-      var input = ["gal", "l", "mi", "km", "lbs", "kg"];
+      var input = ["gal", "L", "mi", "km", "lbs", "kg"];
       var expect = ["L", "gal", "km", "mi", "kg", "lbs"];
       input.forEach(function(ele, i) {
         assert.equal(convertHandler.getReturnUnit(ele), expect[i]);
@@ -86,14 +89,14 @@ suite("Unit Tests", function() {
 
   suite("Function convertHandler.spellOutUnit(unit)", function() {
     test("For Each Valid Unit Inputs", function(done) {
-      let input = ["gal", "l", "mi", "km", "lbs", "kg"];
+      let input = ["gal", "L", "mi", "km", "lbs", "kg"];
       let expect = [
-        "gallon(s)",
-        "litre(s)",
-        "mile(s)",
-        "kilometre(s)",
-        "pound(s)",
-        "kilogram(s)"
+        "gallons",
+        "liters",
+        "miles",
+        "kilometers",
+        "pounds",
+        "kilograms"
       ];
       input.forEach(function(ele, i) {
         assert.equal(convertHandler.spellOutUnit(ele), expect[i]);
@@ -115,7 +118,7 @@ suite("Unit Tests", function() {
     });
 
     test("L to Gal", function(done) {
-      var input = [5, "l"];
+      var input = [5, "L"];
       var expected = 1.32086;
       assert.approximately(
         convertHandler.convert(input[0], input[1]),
